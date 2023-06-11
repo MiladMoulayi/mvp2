@@ -1,10 +1,10 @@
 "use client";
-
+import deleteJoke from "@/utils/deleteJoke";
 import { useState } from "react";
 import Button from "../ui/button";
 import classes from "./joke-item.module.css";
 
-type JokeItemProps = {
+export type JokeItemProps = {
   id: string;
   title: string;
   setup: string;
@@ -19,16 +19,20 @@ export default function JokeItem(props: JokeItemProps) {
     <li className={classes.item}>
       <div className={classes.content}>
         <div className={classes.summary}>
-          <h2>{title}</h2>
+          <h2 className="text-2xl">{title}</h2>
         </div>
-      </div>
-      <div>{setup}</div>
-      <div>{punchlineVisible ? punchline : null}</div>
-      <div className={classes.actions}>
-        <Button onClick={() => setPunchlineVisible(!punchlineVisible)}>
-          <span>{punchlineVisible ? "Hide Punchline" : "See Punchline"}</span>
-          <span className={classes.icon}></span>
-        </Button>
+        <div>Setup: {setup}</div>
+        <div>{punchlineVisible ? "Punchline: " + punchline : null}</div>
+        <div className={classes.actions}>
+          <Button onClick={() => setPunchlineVisible(!punchlineVisible)}>
+            <span>{punchlineVisible ? "Hide Punchline" : "See Punchline"}</span>
+            <span className={classes.icon}></span>
+          </Button>
+          <Button onClick={async () => await deleteJoke(id)}>
+            <span>Delete Joke</span>
+            <span className={classes.icon}></span>
+          </Button>
+        </div>
       </div>
     </li>
   );
