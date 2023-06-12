@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { MouseEventHandler, ReactNode } from "react";
+import { ReactNode } from "react";
 import classes from "./button.module.css";
 
 type ButtonProps = {

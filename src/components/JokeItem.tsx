@@ -1,20 +1,30 @@
 "use client";
+
 import deleteJoke from "@/utils/deleteJoke";
-import { useState } from "react";
+import editJoke from "@/utils/editJoke";
+import React, { useState } from "react";
 import Button from "../ui/button";
-import classes from "./joke-item.module.css";
+import classes from "./JokeItem.module.css";
+import Modal from "./Modal";
 
 export type JokeItemProps = {
   id: string;
   title: string;
   setup: string;
   punchline: string;
-  setJokesState: React.Dispatch<React.SetStateAction<JokeItemProps[]>>;
 };
 
-export default function JokeItem(props: JokeItemProps) {
+export default function JokeItem(
+  props: JokeItemProps & {
+    setJokesState: React.Dispatch<React.SetStateAction<JokeItemProps[]>>;
+  }
+) {
   const { title, setup, punchline, id, setJokesState } = props;
   const [punchlineVisible, setPunchlineVisible] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editTitle, setEditTitle] = useState(title);
+  const [editSetup, setEditSetup] = useState(setup);
+  const [editPunchline, setEditPunchline] = useState(punchline);
 
   const handleDelete = async (id: string) => {
     const success = await deleteJoke(id);
@@ -22,6 +32,25 @@ export default function JokeItem(props: JokeItemProps) {
       setJokesState((prevJokes: JokeItemProps[]) =>
         prevJokes.filter((joke: JokeItemProps) => joke.id !== id)
       );
+    }
+  };
+  const handleEdit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const success = await editJoke(id, editTitle, editSetup, editPunchline);
+    if (success) {
+      setJokesState((prevJokes: JokeItemProps[]) =>
+        prevJokes.map((joke: JokeItemProps) =>
+          joke.id === id
+            ? {
+                ...joke,
+                title: editTitle,
+                setup: editSetup,
+                punchline: editPunchline,
+              }
+            : joke
+        )
+      );
+      setIsModalOpen(false);
     }
   };
 
@@ -42,6 +71,22 @@ export default function JokeItem(props: JokeItemProps) {
             <span>Delete Joke</span>
             <span className={classes.icon}></span>
           </Button>
+          <Button onClick={() => setIsModalOpen(true)}>
+            <span>Edit Joke</span>
+            <span className={classes.icon}></span>
+          </Button>
+          {isModalOpen && (
+            <Modal
+              onClose={() => setIsModalOpen(false)}
+              onSubmit={handleEdit}
+              editTitle={editTitle}
+              setEditTitle={setEditTitle}
+              editSetup={editSetup}
+              setEditSetup={setEditSetup}
+              editPunchline={editPunchline}
+              setEditPunchline={setEditPunchline}
+            />
+          )}
         </div>
       </div>
     </li>
