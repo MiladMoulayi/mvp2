@@ -11,10 +11,10 @@
 }
 
 .modalcontent {
-  background-color: blue;
+  background-color: rgba(62, 78, 80, 0.9);
   padding: 20px;
   border-radius: 4px;
-  color: orchid;
+  color: #00dff7;
 }
 
 .textarea::-webkit-scrollbar {

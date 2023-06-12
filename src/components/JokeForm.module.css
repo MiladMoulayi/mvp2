@@ -3,9 +3,6 @@
 }
 
 .textarea {
-}
-
-.textarea {
   border: 1px solid #87929d; /* border-slate-300, borders are typically 1px in Tailwind */
   background-color: transparent; /* bg-transparent */
   border-radius: 0.25rem; /* rounded, this equals to 4px */
