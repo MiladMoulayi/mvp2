@@ -3,22 +3,20 @@
 }
 
 .textarea {
-  border: 1px solid #87929d; /* border-slate-300, borders are typically 1px in Tailwind */
-  background-color: transparent; /* bg-transparent */
-  border-radius: 0.25rem; /* rounded, this equals to 4px */
-  padding: 0.25rem 0.5rem; /* px-2 py-1, equals to 8px horizontal and 4px vertical */
-  outline: none; /* outline-none */
+  border: 1px solid #87929d;
+  background-color: transparent;
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  outline: none;
   -ms-overflow-style: none;
   scrollbar-width: none;
   height: 120px;
 }
 
-/* focus-within is a pseudo-class, so it needs its own rule */
 .textarea:focus-within {
-  border-color: #ebf4f8; /* border-slate-100 */
+  border-color: #ebf4f8;
 }
 
-/* resize-none is a utility for the resize property, and it requires its own rule */
 .textarea {
-  resize: none; /* resize-none */
+  resize: none;
 }
