@@ -1,15 +1,17 @@
 "use server";
 
-import { redirect } from "next/navigation";
-
 import { prisma } from "@/db";
 
-export default async function deleteJoke(id: string) {
-  await prisma.joke.delete({
-    where: {
-      id: id,
-    },
-  });
-
-  redirect("/");
+export default async function deleteJoke(id: string): Promise<boolean> {
+  try {
+    await prisma.joke.delete({
+      where: {
+        id: id,
+      },
+    });
+    return true;
+  } catch (error) {
+    console.error("Failed to delete joke with id: " + id, error);
+    return false;
+  }
 }

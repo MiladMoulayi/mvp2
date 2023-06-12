@@ -13,7 +13,7 @@ export default function JokesList({ jokes }: JokesListProps) {
   return (
     <ul className="pl-4">
       {jokesState.map((joke: JokeItemProps) => (
-        <JokeItem key={joke.id} {...joke} />
+        <JokeItem key={joke.id} {...joke} setJokesState={setJokesState} />
       ))}
     </ul>
   );

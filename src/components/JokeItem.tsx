@@ -9,11 +9,21 @@ export type JokeItemProps = {
   title: string;
   setup: string;
   punchline: string;
+  setJokesState: React.Dispatch<React.SetStateAction<JokeItemProps[]>>;
 };
 
 export default function JokeItem(props: JokeItemProps) {
-  const { title, setup, punchline, id } = props;
+  const { title, setup, punchline, id, setJokesState } = props;
   const [punchlineVisible, setPunchlineVisible] = useState(false);
+
+  const handleDelete = async (id: string) => {
+    const success = await deleteJoke(id);
+    if (success) {
+      setJokesState((prevJokes: JokeItemProps[]) =>
+        prevJokes.filter((joke: JokeItemProps) => joke.id !== id)
+      );
+    }
+  };
 
   return (
     <li className={classes.item}>
@@ -28,7 +38,7 @@ export default function JokeItem(props: JokeItemProps) {
             <span>{punchlineVisible ? "Hide Punchline" : "See Punchline"}</span>
             <span className={classes.icon}></span>
           </Button>
-          <Button onClick={async () => await deleteJoke(id)}>
+          <Button onClick={async () => await handleDelete(id)}>
             <span>Delete Joke</span>
             <span className={classes.icon}></span>
           </Button>
