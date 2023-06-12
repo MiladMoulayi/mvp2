@@ -54,26 +54,42 @@ export default function JokeItem(
     }
   };
 
+  if (punchlineVisible) {
+    return (
+      <li className={classes.item}>
+        <div className={classes.content}>
+          <div className={classes.summary}>
+            <h2 className="text-2xl">{title}</h2>
+          </div>
+          <div>{punchline}</div>
+          <div className={classes.actions}>
+            <Button onClick={() => setPunchlineVisible(!punchlineVisible)}>
+              <span>
+                {punchlineVisible ? "Hide Punchline" : "See Punchline"}
+              </span>
+            </Button>
+          </div>
+        </div>
+      </li>
+    );
+  }
+
   return (
     <li className={classes.item}>
       <div className={classes.content}>
         <div className={classes.summary}>
           <h2 className="text-2xl">{title}</h2>
         </div>
-        <div>Setup: {setup}</div>
-        <div>{punchlineVisible ? "Punchline: " + punchline : null}</div>
+        <div>{setup}</div>
         <div className={classes.actions}>
           <Button onClick={() => setPunchlineVisible(!punchlineVisible)}>
             <span>{punchlineVisible ? "Hide Punchline" : "See Punchline"}</span>
-            <span className={classes.icon}></span>
           </Button>
           <Button onClick={async () => await handleDelete(id)}>
             <span>Delete Joke</span>
-            <span className={classes.icon}></span>
           </Button>
           <Button onClick={() => setIsModalOpen(true)}>
             <span>Edit Joke</span>
-            <span className={classes.icon}></span>
           </Button>
           {isModalOpen && (
             <Modal
